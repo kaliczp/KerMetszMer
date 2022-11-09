@@ -19,3 +19,8 @@ plot.zoo(Mogy.xts[,4], ylab = "", col = "red", lwd = 2, ylim = c(0,20), xaxt = "
 mtext("Hőmérséklet", side = 4, line = 2, at = 3, col = "red", las = 0)
 axis(4, at = 0:6)
 dev.off()
+
+Nyir <- raw[raw$Alany == "NYI", 4:7]
+Nyir <- Nyir[-23,]
+IdőNyir <- seq(as.Date("2022-02-13"),as.Date("2022-03-11"), by = "days")
+Nyir.xts <- xts(Nyir, IdőNyir)
