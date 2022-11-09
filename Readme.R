@@ -1,0 +1,21 @@
+raw <- read.csv2("Szárkeresztmetszet vizsgálat leovasások.csv")
+Mogyoró <- raw[raw$Alany == "KMO",4:7]
+IdőMogyoró <- seq(as.Date("2022-01-31"),as.Date("2022-02-13"), by = "days")
+library(xts)
+Mogy.xts <- xts(Mogyoró, IdőMogyoró)
+
+
+png("Mogyoró.png", width = 15.67, height= 10.3, units = "cm", res = 300)
+par(mar = c(3.1, 4.1, 0.5, 4.1))
+plot.zoo(Mogy.xts[,2], type = "n", ylab = "Km. változás [mm]", xlab = "", yaxs = "i", ylim = c(-0.5,0.5))
+grid(nx = NA, ny = NULL)
+lines(as.zoo(Mogy.xts[,2]), lwd = 3)
+par(new = TRUE)
+plot.zoo(Mogy.xts[,3], type = "h", ylab = "", col = "blue", ylim = c(10,0), lwd = 10, lend = 1, xaxt = "n", yaxt = "n", yaxs = "i")
+axis(4, at = 0:5, col = "blue")
+mtext("Csapadék [mm]", side = 4, line = 2, at = 2.5, col = "blue")
+par(new = TRUE)
+plot.zoo(Mogy.xts[,4], ylab = "", col = "red", lwd = 2, ylim = c(0,20), xaxt = "n", yaxt = "n", yaxs = "i")
+mtext("Hőmérséklet", side = 4, line = 2, at = 3, col = "red")
+axis(4, at = 0:6, col = "red")
+dev.off()
